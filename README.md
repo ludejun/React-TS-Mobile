@@ -42,8 +42,6 @@ React + React-Router + webpack + typescript + mock + eslint + prettier + fetch
 
 #### 参考文档
 
-[Rematch实践指南](https://rematch.gitbook.io/handbook/)
-
 [fetch使用](https://github.github.io/fetch/)
 
 [MockJS示例](http://mockjs.com/examples.html)
