@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^5.1.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-keeper": "^2.2.2",
     "react-router-dom": "^5.2.0",
     "whatwg-fetch": "^3.4.1"
   },
