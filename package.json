@@ -22,7 +22,7 @@
     "start": "node ./webpack/dev --bundleSize=false",
     "start:size": "node ./webpack/dev --bundleSize=true",
     "start:mock": "node ./webpack/dev --mock=true",
-    "dev": "node ./webpack/dev",
+    "dev": "NODE_ENV=dev webpack --config ./webpack/dev.js",
     "build": "NODE_ENV=prod webpack --config ./webpack/prod.js",
     "lint": "eslint src",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --print-width 100 \"src/**/*.{js,ts,tsx}\"",

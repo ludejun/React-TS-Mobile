@@ -1,14 +1,24 @@
 import React from 'react';
-import { HashRouter, Route} from 'react-keeper';
+import { BrowserRouter, Route } from 'react-keeper';
 import App from './pages/App';
+import JSBridge from './utils/jsBridge';
+import JSBridgeDemo from './pages/jsBridgeDemo/demo';
 // import LoginPage from './pages/login/index';
 import Layout from './pages/layout';
 import NotFound from './pages/layout/404';
 
 export default function() {
+  JSBridge.init({
+    projectName: 'react-ts-mobile',
+    errorCallback: () => console.log('调用JSBridge报错'),
+  });
+
   return (
-    <HashRouter>
-      <Route cache index path="/" component={App} />
+    <BrowserRouter>
+      <React.Fragment>
+        <Route cache index path="/" component={App} />
+        <Route path="/jsbridgedemo" component={JSBridgeDemo} />
+      </React.Fragment>
       {/* <Route component={Layout} path="/main" enterFilter={[loginCheck]}>
         <Route index component={Layout} path="/info" />
         <Route component={Layout} path="/edit" />
@@ -19,12 +29,12 @@ export default function() {
         })
       }} path='/user'></Route> // 动态化加载路由组件*/}
       {/* <Route component={NotFound} miss /> */}
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
 function loginCheck(cb, props) {
-  if(props.user) {
+  if (props.user) {
     cb();
   }
 }
