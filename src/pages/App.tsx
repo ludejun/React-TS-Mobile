@@ -3,6 +3,7 @@ import { CacheLink } from 'react-keeper';
 import JSBridge from  '../utils/jsBridge';
 import Count from './components/Count';
 import './App.less';
+import {apiURL} from '../configs/api';
 
 interface IAppProps {
   count?: number;
@@ -22,6 +23,7 @@ declare global {
 export default class App extends React.Component<IAppProps, {}> {
   constructor(props: IAppProps) {
     super(props);
+    console.log(apiURL('login'));
   }
 
   componentDidMount() {
