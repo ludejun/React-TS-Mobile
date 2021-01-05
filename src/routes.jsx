@@ -1,18 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-keeper';
 import App from './pages/App';
-import JSBridge from './utils/jsBridge';
 import JSBridgeDemo from './pages/jsBridgeDemo/demo';
 // import LoginPage from './pages/login/index';
 import Layout from './pages/layout';
 import NotFound from './pages/layout/404';
 
 export default function() {
-  JSBridge.init({
-    projectName: 'react-ts-mobile',
-    errorCallback: () => console.log('调用JSBridge报错'),
-  });
-
   return (
     <BrowserRouter>
       <React.Fragment>
