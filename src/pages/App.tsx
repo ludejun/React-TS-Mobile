@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { CacheLink } from 'react-keeper';
-import JSBridge from  '../utils/jsBridge';
+import JSBridge from '../utils/jsBridge';
 import Count from './components/Count';
 import './App.less';
-import {apiURL} from '../configs/api';
+import { apiURL } from '../configs/api';
 
 interface IAppProps {
   count?: number;
@@ -12,11 +12,11 @@ interface IAppProps {
 }
 declare global {
   interface Window {
-    WKWebViewJavascriptBridge: any,
-    WKWVJBCallbacks: any,
-    webkit: any,
-    JsInterface: any,
-    ZXGJavascriptHandler: any
+    WKWebViewJavascriptBridge: any;
+    WKWVJBCallbacks: any;
+    webkit: any;
+    JsInterface: any;
+    ZXGJavascriptHandler: any;
   }
 }
 
@@ -41,7 +41,7 @@ export default class App extends React.Component<IAppProps, {}> {
             console.log('[JSBridge-业务]: 微信分享返回', res);
           }
         );
-      }
+      };
     }
   }
 
@@ -53,7 +53,7 @@ export default class App extends React.Component<IAppProps, {}> {
           <div>
             <CacheLink to="/jsbridgedemo">跳转jsbridgedemo</CacheLink>
           </div>
-          <div id='log'></div>
+          <div id="log"></div>
 
           {/* <Count onAddClick={increment} onAddAsyncClick={incrementAsync} /> */}
           <CacheLink to="/404"></CacheLink>

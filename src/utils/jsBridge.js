@@ -1,4 +1,4 @@
-import { isAndroidOrIOS, addParamsToUrl } from './index';
+import { isAndroidOrIOS, addParamsToUrl } from './index.ts';
 
 // declare global {
 //   interface Window {
@@ -10,21 +10,25 @@ import { isAndroidOrIOS, addParamsToUrl } from './index';
 // }
 
 // TODO 说明DEMO使用方法、API @ludejun
-class jsBridge {
-  constructor(props) {}
+class JsBridge {
+  constructor() {
+    this.version = '1.0.0';
+  }
 
   init(options) {
     this.project = options.projectName || '';
     this.errorCallback = options.errorCallback || null;
     this.os = isAndroidOrIOS();
+    // eslint-disable-next-line
     window.__JSBridge = this; // 给window上一个实例，也可以通过这个实例调用JSBridge
     // 给原生调用
     window.invokeJSBack = () => {
-      history.go(-1);
-    }
+      window.history.go(-1);
+    };
   }
 
   // iOS真实调用bridge
+  // eslint-disable-next-line
   setupWKWebViewJavascriptBridge(callback) {
     if (window.WKWebViewJavascriptBridge) {
       return callback(window.WKWebViewJavascriptBridge);
@@ -52,10 +56,10 @@ class jsBridge {
             eventName, // 调用原生的方法
             body: data, // 给原生传递的数据
           },
-          function(response) {
+          response => {
             console.log(`[JSBridge]: iOS调用原生方法${eventName}返回啦`);
             callback(response);
-          }
+          },
         );
       } catch (e) {
         console.log(`[JSBridge]: iOS调用原生方法${eventName}失败`);
@@ -77,7 +81,7 @@ class jsBridge {
           callback();
         } else {
           console.log(`[JSBridge]: android调用的原生方法${eventName}没有`);
-          this.errorCallback(e);
+          this.errorCallback(`[JSBridge]: android调用的原生方法${eventName}没有`);
         }
       }
     } catch (e) {
@@ -90,12 +94,12 @@ class jsBridge {
   iOSInvokeJS() {
     this.setupWKWebViewJavascriptBridge(function(bridge) {
       try {
-        bridge.registerHandler('ZXGJavascriptHandler', function(data, responseCallback) {
+        bridge.registerHandler('ZXGJavascriptHandler', (data, responseCallback) => {
           console.log('[JSBridge]: iOS原生调用方法ZXGJavascriptHandler返回啦');
           responseCallback(data);
         });
       } catch (e) {
-        console.log(`[JSBridge]: iOS原生调用方法ZXGJavascriptHandler失败`);
+        console.log('[JSBridge]: iOS原生调用方法ZXGJavascriptHandler失败');
         this.errorCallback(e);
       }
     });
@@ -139,25 +143,27 @@ class jsBridge {
   }
 
   // 隐藏导航条
+  // eslint-disable-next-line
   hideHeader(url, isShowBack = true) {
     if (isShowBack) {
       // 2、隐藏原生导航条，并显示返回原生返回按钮
       return addParamsToUrl(url, 'top', 'hide');
-    } else {
-      // 1、隐藏原生导航条，并隐藏原生返回按钮
-      return addParamsToUrl(url, 'navigationBar', 'hide');
     }
+    // 1、隐藏原生导航条，并隐藏原生返回按钮
+    return addParamsToUrl(url, 'navigationBar', 'hide');
   }
 
   // 自定义导航条
+  // eslint-disable-next-line
   modifyHeader(url, options = {}) {
+    let result = url;
     if (options.title) {
-      url = addParamsToUrl(url, 'title', encodeURI(options.title));
+      result = addParamsToUrl(result, 'title', encodeURI(options.title));
     }
     if (options.backgroundColor) {
-      url = addParamsToUrl(url, 'navigationBarTintColor', options.backgroundColor);
+      result = addParamsToUrl(result, 'navigationBarTintColor', options.backgroundColor);
     }
-    return url;
+    return result;
   }
 
   // 在导航条显示原生分享按钮
@@ -181,4 +187,4 @@ class jsBridge {
   }
 }
 
-export default new jsBridge();
+export default new JsBridge();

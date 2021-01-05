@@ -14,10 +14,7 @@ JSBridge.init({
   errorCallback: () => console.log('调用JSBridge报错'),
 });
 
-ReactDOM.render(
-  <Routes />,
-  document.getElementById('root') as HTMLElement
-);
+ReactDOM.render(<Routes />, document.getElementById('root') as HTMLElement);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
