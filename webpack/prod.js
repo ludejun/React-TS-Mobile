@@ -74,10 +74,10 @@ const loaders = [
 
 const config = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx']
   },
   entry: {
-    main: './src/index.tsx',
+    main: './src/index.tsx'
     // vendor: ['react', 'react-dom']
   },
   output: {
@@ -86,11 +86,11 @@ const config = {
     // 如使用CDN
     // publicPath: "http://cdn.example.com/assets/[hash]/"
     // 如有使用import()动态加载的代码打包
-    chunkFilename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js'
   },
 
   module: {
-    rules: loaders,
+    rules: loaders
   },
 
   mode: 'production',
@@ -98,11 +98,13 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('prod'),
+        NODE_ENV:
+          JSON.stringify(process.env.NODE_ENV) || JSON.stringify('production')
       },
+      __MOCK: false
     }),
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['release'],
+      cleanAfterEveryBuildPatterns: ['release']
     }),
     new HtmlWebpackPlugin({
       title: projectConfig.htmlTitle,
@@ -118,18 +120,18 @@ const config = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
-        collapseInlineTagWhitespace: true,
+        collapseInlineTagWhitespace: true
       },
       template: path.join(__dirname, '../public/index.html'),
       hash: true,
-      alwaysWriteToDisk: true,
+      alwaysWriteToDisk: true
     }),
     // new webpack.optimize.OccurenceOrderPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: '[name].[chunkhash].css',
-      chunkFilename: '[id].min.css',
+      chunkFilename: '[id].min.css'
     }),
     // new webpack.optimize.UglifyJsPlugin({
     //   compressor: {
@@ -138,7 +140,8 @@ const config = {
     //   },
     // }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new BundleAnalyzerPlugin({ analyzerPort: 5593 }),
+    // 根据条件或者命令行参数看是否打开分析页面，打开这个会阻塞CICD
+    new BundleAnalyzerPlugin({ analyzerPort: 5593 })
   ],
 
   // // 防止将某个模块打包到bundle中，如从CDN引入react而不是将它打包
@@ -149,7 +152,7 @@ const config = {
   // 当包体积过大时(超250kb)，将展示一条错误(警告)
   performance: {
     maxAssetSize: 1000000,
-    hints: 'warning',
+    hints: 'warning'
   },
 
   // 类似CommonsChunkPlugin拆分公共代码
@@ -168,20 +171,21 @@ const config = {
           test: /[\\/]node_modules[\\/](react|react-dom|core-js)[\\/]/,
           chunks: 'all',
           name: 'cached',
-          filename: 'cached.bundle.js', // 直接写死文件名，不加hash
+          filename: 'cached.bundle.js' // 直接写死文件名，不加hash
         },
-        vendors: { // 在output中加hash
+        vendors: {
+          // 在output中加hash
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
+          priority: -10
         },
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-  },
+          reuseExistingChunk: true
+        }
+      }
+    }
+  }
 };
 
 module.exports = config;

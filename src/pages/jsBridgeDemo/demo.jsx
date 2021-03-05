@@ -11,7 +11,7 @@ export default class JSBridgeDemo extends React.Component {
         description: 'JSBridge测试中',
         image: 'https://static.loyalvalleycapital.com/upload/20201018/000012_1603017266674.jpg',
       },
-      (res) => {
+      res => {
         console.log('[JSBridge-业务]: 微信分享返回', res);
       }
     );
